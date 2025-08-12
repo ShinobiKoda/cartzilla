@@ -1,0 +1,42 @@
+"use client";
+
+import { useTheme } from "next-themes";
+import { useEffect, useState } from "react";
+import { FaRegMoon } from "react-icons/fa";
+import { MdOutlineWbSunny } from "react-icons/md";
+
+export default function ThemeToggle() {
+  const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return <button>Loading...</button>;
+  }
+
+  return (
+    <button
+      onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+      className="relative p-2 rounded-full transition-all duration-300 ease-in-out"
+    >
+      <MdOutlineWbSunny
+        className={`text-2xl transition-all duration-300 ease-in-out ${
+          theme === "light"
+            ? "opacity-100 rotate-0 text-gray-200 drop-shadow-[0_0_2px_rgba(0,0,0,0.8)]"
+            : "opacity-0 rotate-90 text-transparent"
+        }`}
+      />
+
+      <FaRegMoon
+        className={`absolute top-2 left-2 text-2xl transition-all duration-300 ease-in-out ${
+          theme === "dark"
+            ? "opacity-100 rotate-0 text-gray-200 drop-shadow-[0_0_2px_rgba(255,255,255,0.8)]"
+            : "opacity-0 -rotate-90 text-transparent"
+        }`}
+      />
+    </button>
+  );
+}
