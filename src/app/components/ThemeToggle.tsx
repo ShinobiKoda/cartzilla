@@ -4,6 +4,7 @@ import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 import { FaRegMoon } from "react-icons/fa";
 import { MdOutlineWbSunny } from "react-icons/md";
+import { ClipLoader } from "react-spinners";
 
 export default function ThemeToggle() {
   const { theme, setTheme } = useTheme();
@@ -14,7 +15,7 @@ export default function ThemeToggle() {
   }, []);
 
   if (!mounted) {
-    return <button>Loading...</button>;
+    return <ClipLoader color="white" size={20}/>;
   }
 
   return (

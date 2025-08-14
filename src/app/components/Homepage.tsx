@@ -3,6 +3,9 @@ import { GoArrowUpRight } from "react-icons/go";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { zoomIn } from "./animations/motion";
+import { MdOutlineLocalShipping, MdOutlineMessage } from "react-icons/md";
+import { CiCreditCard1 } from "react-icons/ci";
+import { FaRepeat } from "react-icons/fa6";
 
 export function Homepage() {
   return (
@@ -36,6 +39,60 @@ export function Homepage() {
             className="w-full"
           />
         </motion.div>
+      </div>
+      <div className="grid grid-cols-2 gap-6 mt-14">
+        <div className="flex flex-col gap-4 items-center justify-start text-center h-full">
+          <div className="w-[86px] h-[86px] rounded-full bg-gray-50 dark:bg-gray-800 flex items-center justify-center">
+            <MdOutlineLocalShipping size={32} />
+          </div>
+          <div className="flex-1 flex flex-col justify-start">
+            <p className="font-semibold text-base text-gray-900 dark:text-white min-h-[48px] flex items-center justify-center">
+              Free Shipping & Returns
+            </p>
+            <p className="font-normal text-sm text-gray-600 dark:text-gray-300 min-h-[40px] flex items-center justify-center">
+              For all orders over ₦200,000
+            </p>
+          </div>
+        </div>
+        <div className="flex flex-col gap-4 items-center justify-start text-center h-full">
+          <div className="w-[86px] h-[86px] rounded-full bg-gray-50 dark:bg-gray-800 flex items-center justify-center">
+            <CiCreditCard1 size={32} className="dark:text-white" />
+          </div>
+          <div className="flex-1 flex flex-col justify-start">
+            <p className="font-semibold text-base text-gray-900 dark:text-white min-h-[48px] flex items-center justify-center">
+              Secure Payment
+            </p>
+            <p className="font-normal text-sm text-gray-600 dark:text-gray-300 min-h-[40px] flex items-center justify-center">
+              We ensure secure payment
+            </p>
+          </div>
+        </div>
+        <div className="flex flex-col gap-4 items-center justify-start text-center h-full">
+          <div className="w-[86px] h-[86px] rounded-full bg-gray-50 dark:bg-gray-800 flex items-center justify-center">
+            <FaRepeat size={32} />
+          </div>
+          <div className="flex-1 flex flex-col justify-start">
+            <p className="font-semibold text-base text-gray-900 dark:text-white min-h-[48px] flex items-center justify-center">
+              Money Back Guarantee
+            </p>
+            <p className="font-normal text-sm text-gray-600 dark:text-gray-300 min-h-[40px] flex items-center justify-center">
+              Returning money after 30 days
+            </p>
+          </div>
+        </div>
+        <div className="flex flex-col gap-4 items-center justify-start text-center h-full">
+          <div className="w-[86px] h-[86px] rounded-full bg-gray-50 dark:bg-gray-800 flex items-center justify-center">
+            <MdOutlineMessage size={32} className="dark:text-white" />
+          </div>
+          <div className="flex-1 flex flex-col justify-start">
+            <p className="font-semibold text-base text-gray-900 dark:text-white min-h-[48px] flex items-center justify-center">
+              24/7 Customer Support
+            </p>
+            <p className="font-normal text-sm text-gray-600 dark:text-gray-300 min-h-[40px] flex items-center justify-center">
+              Friendly customer support
+            </p>
+          </div>
+        </div>
       </div>
     </div>
   );
