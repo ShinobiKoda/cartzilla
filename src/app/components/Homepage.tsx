@@ -40,6 +40,7 @@ export function Homepage() {
           />
         </motion.div>
       </div>
+
       <div className="grid grid-cols-2 gap-6 mt-14">
         <div className="flex flex-col gap-4 items-center justify-start text-center h-full">
           <div className="w-[86px] h-[86px] rounded-full bg-gray-50 dark:bg-gray-800 flex items-center justify-center">
@@ -94,6 +95,10 @@ export function Homepage() {
           </div>
         </div>
       </div>
+
+      <section>
+        <h2>New Arrivals</h2>
+      </section>
     </div>
   );
 }
