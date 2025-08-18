@@ -8,9 +8,7 @@ import {
   fadeInUp,
   fadeInDown,
   staggerChildren,
-  slideInFromRight,
   fadeIn,
-  scaleOnHover,
 } from "./animations/motion";
 import { MdOutlineLocalShipping, MdOutlineMessage } from "react-icons/md";
 import { CiCreditCard1 } from "react-icons/ci";
@@ -104,9 +102,12 @@ export function Homepage() {
               ProMax
             </p>
             <div className="w-full max-w-[150px] mx-auto">
-              <button className="bg-button-primary text-white font-medium text-base rounded-lg flex items-center text-center py-4 w-full justify-center">
+              <motion.button
+                whileTap={{ scale: 0.9 }}
+                className="bg-button-primary text-white font-medium text-base rounded-lg flex items-center text-center py-4 w-full justify-center cursor-pointer"
+              >
                 Shop now <GoArrowUpRight />
-              </button>
+              </motion.button>
             </div>
           </div>
           <Image
@@ -114,7 +115,7 @@ export function Homepage() {
             alt="Headphone"
             width={100}
             height={100}
-            className="w-full"
+            className="w-full max-w-[300px] mx-auto"
           />
         </motion.div>
       </div>
@@ -203,12 +204,12 @@ export function Homepage() {
           New Arrivals
         </motion.h2>
         <motion.div
-          className="w-full bg-cover bg-no-repeat rounded-2xl h-[465px] flex flex-col items-center justify-center"
+          className="w-full bg-cover bg-no-repeat rounded-2xl h-[465px] flex flex-col items-center justify-center overflow-hidden"
           style={{ backgroundImage: "url('/images/banner.svg')" }}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.3 }}
-          variants={slideInFromRight}
+          variants={fadeInUp}
         >
           <motion.div variants={staggerChildren} className="contents">
             <motion.div variants={zoomIn} transition={{ delay: 0.05 }}>
@@ -232,9 +233,10 @@ export function Homepage() {
               </p>
               <div className="w-full max-w-[121px] mx-auto">
                 <motion.button
-                  className="bg-button-primary rounded-md text-white flex items-center py-2 px-4 font-medium text-[12px]"
+                  className="bg-button-primary rounded-md text-white flex items-center py-2 px-4 font-medium text-[12px] cursor-pointer"
                   variants={fadeIn}
                   whileHover="hover"
+                  whileTap={{ scale: 0.9 }}
                 >
                   From $1,119 <GoArrowUpRight />
                 </motion.button>
@@ -252,17 +254,18 @@ export function Homepage() {
           {electronicItems.map((item, index) => (
             <motion.div
               key={index}
-              className="w-full flex items-center gap-4"
+              className="w-full flex items-center gap-4 will-change-transform"
               variants={fadeInUp}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.99 }}
+              transition={{ type: "spring", stiffness: 300, damping: 20 }}
             >
-              <motion.div variants={scaleOnHover} whileHover="hover">
-                <Image
-                  src={item.image}
-                  alt={item.name}
-                  height={100}
-                  width={100}
-                />
-              </motion.div>
+              <Image
+                src={item.image}
+                alt={item.name}
+                height={100}
+                width={100}
+              />
               <div className="space-y-4">
                 <div className="flex items-center gap-2">
                   <div className="flex items-center">
@@ -300,11 +303,21 @@ export function Homepage() {
 
       <section className="w-full mt-14">
         <div className="w-full flex items-center justify-between">
-          <h2 className="font-semibold text-[23px] text-gray-900 dark:text-white">Trending Products</h2>
-          <button className="flex items-center gap-2">
-            <Link href="/" className="text-gray-700 text-base font-medium dark:text-gray-200">View All</Link>
+          <h2 className="font-semibold text-[23px] text-gray-900 dark:text-white">
+            Trending Products
+          </h2>
+          <motion.button
+            whileTap={{ scale: 0.9 }}
+            className="flex items-center gap-2 hover:opacity-90 cursor-pointer"
+          >
+            <Link
+              href="#"
+              className="text-gray-700 text-base font-medium dark:text-gray-200"
+            >
+              View All
+            </Link>
             <MdKeyboardArrowRight />
-          </button>
+          </motion.button>
         </div>
       </section>
     </div>
