@@ -2,6 +2,7 @@
 import { GoArrowUpRight } from "react-icons/go";
 import Image from "next/image";
 import { motion } from "framer-motion";
+import Link from "next/link";
 import {
   zoomIn,
   fadeInUp,
@@ -15,6 +16,7 @@ import { MdOutlineLocalShipping, MdOutlineMessage } from "react-icons/md";
 import { CiCreditCard1 } from "react-icons/ci";
 import { FaRepeat } from "react-icons/fa6";
 import { FaStar, FaRegStar } from "react-icons/fa";
+import { MdKeyboardArrowRight } from "react-icons/md";
 
 const electronicItems = [
   {
@@ -294,6 +296,16 @@ export function Homepage() {
             </motion.div>
           ))}
         </motion.div>
+      </section>
+
+      <section className="w-full mt-14">
+        <div className="w-full flex items-center justify-between">
+          <h2 className="font-semibold text-[23px] text-gray-900 dark:text-white">Trending Products</h2>
+          <button className="flex items-center gap-2">
+            <Link href="/" className="text-gray-700 text-base font-medium dark:text-gray-200">View All</Link>
+            <MdKeyboardArrowRight />
+          </button>
+        </div>
       </section>
     </div>
   );
