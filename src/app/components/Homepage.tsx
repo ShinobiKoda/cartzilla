@@ -8,10 +8,80 @@ import {
   fadeInDown,
   staggerChildren,
   slideInFromRight,
+  fadeIn,
+  scaleOnHover,
 } from "./animations/motion";
 import { MdOutlineLocalShipping, MdOutlineMessage } from "react-icons/md";
 import { CiCreditCard1 } from "react-icons/ci";
 import { FaRepeat } from "react-icons/fa6";
+import { FaStar, FaRegStar } from "react-icons/fa";
+
+const electronicItems = [
+  {
+    id: 1,
+    name: "Smart Watch Series 7, White",
+    price: 449.0,
+    comments: 45,
+    rating: 5,
+    image: "/images/smartwatch.svg",
+  },
+  {
+    id: 2,
+    name: "VRBO1 Vitual Reality Glasses",
+    price: 340.99,
+    comments: 123,
+    rating: 4,
+    image: "/images/vr-glasses.svg",
+  },
+  {
+    id: 3,
+    name: "Wireless Bluetooth Heaphones Sony",
+    price: 357.0,
+    comments: 34,
+    rating: 4,
+    image: "/images/wireless-headphones.svg",
+  },
+  {
+    id: 4,
+    name: "Laptop Apple Macbook Pro 13",
+    price: 1200.0,
+    comments: 8,
+    rating: 5,
+    image: "/images/macbook-pro13.svg",
+  },
+  {
+    id: 5,
+    name: "Tablet Apple Ipad M1",
+    price: 540.0,
+    comments: 126,
+    rating: 3,
+    image: "/images/apple-ipad.svg",
+  },
+  {
+    id: 6,
+    name: "Earphones Apple Airpods 2 Pro",
+    price: 209.99,
+    comments: 340,
+    rating: 5,
+    image: "/images/apple-earpods.svg",
+  },
+  {
+    id: 7,
+    name: "Power Bank PBS 1000mAh",
+    price: 49.99,
+    comments: 29,
+    rating: 4,
+    image: "/images/powerbank.svg",
+  },
+  {
+    id: 8,
+    name: "Apple iphone 14 128GB White",
+    price: 899.0,
+    comments: 12,
+    rating: 5,
+    image: "/images/iphone14.svg",
+  },
+];
 
 export function Homepage() {
   return (
@@ -47,7 +117,6 @@ export function Homepage() {
         </motion.div>
       </div>
 
-      {/* Features grid with staggered fade-in-up */}
       <motion.div
         className="grid grid-cols-2 gap-6 mt-14"
         initial="hidden"
@@ -139,24 +208,91 @@ export function Homepage() {
           viewport={{ once: true, amount: 0.3 }}
           variants={slideInFromRight}
         >
-          <Image
-            src="/images/macbook.svg"
-            alt="Macbook Image"
-            height={100}
-            width={100}
-            className="w-full max-w-[294px] relative z-20 pt-5"
-          />
-          <div className="flex flex-col gap-[14px] relative z-10 -top-14 text-center">
-            <h3 className="font-bold text-[40px] text-white">MacBook</h3>
-            <p className="font-medium text-base text-gray-300">
-              Be Pro Anywhere
-            </p>
-            <div className="w-full max-w-[121px] mx-auto">
-              <button className="bg-button-primary rounded-md text-white flex items-center py-2 px-4 font-medium text-[12px]">
-                From $1,119 <GoArrowUpRight />
-              </button>
-            </div>
-          </div>
+          <motion.div variants={staggerChildren} className="contents">
+            <motion.div variants={zoomIn} transition={{ delay: 0.05 }}>
+              <Image
+                src="/images/macbook.svg"
+                alt="Macbook Image"
+                height={100}
+                width={100}
+                className="w-full max-w-[294px] relative z-20 pt-5"
+              />
+            </motion.div>
+
+            <motion.div
+              variants={fadeInUp}
+              transition={{ delay: 0.12 }}
+              className="flex flex-col gap-[14px] relative z-10 -top-14 text-center"
+            >
+              <h3 className="font-bold text-[40px] text-white">MacBook</h3>
+              <p className="font-medium text-base text-gray-300">
+                Be Pro Anywhere
+              </p>
+              <div className="w-full max-w-[121px] mx-auto">
+                <motion.button
+                  className="bg-button-primary rounded-md text-white flex items-center py-2 px-4 font-medium text-[12px]"
+                  variants={fadeIn}
+                  whileHover="hover"
+                >
+                  From $1,119 <GoArrowUpRight />
+                </motion.button>
+              </div>
+            </motion.div>
+          </motion.div>
+        </motion.div>
+        <motion.div
+          className="w-full grid grid-cols-1 gap-8"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
+          variants={staggerChildren}
+        >
+          {electronicItems.map((item, index) => (
+            <motion.div
+              key={index}
+              className="w-full flex items-center gap-4"
+              variants={fadeInUp}
+            >
+              <motion.div variants={scaleOnHover} whileHover="hover">
+                <Image
+                  src={item.image}
+                  alt={item.name}
+                  height={100}
+                  width={100}
+                />
+              </motion.div>
+              <div className="space-y-4">
+                <div className="flex items-center gap-2">
+                  <div className="flex items-center">
+                    {Array.from({ length: 5 }).map((_, i) =>
+                      i < item.rating ? (
+                        <FaStar key={i} size={16} className="text-yellow-400" />
+                      ) : (
+                        <FaRegStar
+                          key={i}
+                          size={16}
+                          className="text-gray-300 dark:text-gray-500"
+                        />
+                      )
+                    )}
+                  </div>
+                  <p className="text-gray-400 font-normal text-[12px] dark:text-gray-500">
+                    {item.comments}
+                  </p>
+                </div>
+                <p className="font-medium text-sm dark:text-white">
+                  {item.name}
+                </p>
+                <p className="font-semibold text-xl text-gray-900 dark:text-white">
+                  $
+                  {new Intl.NumberFormat("en-US", {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2,
+                  }).format(item.price)}
+                </p>
+              </div>
+            </motion.div>
+          ))}
         </motion.div>
       </section>
     </div>
