@@ -2,7 +2,13 @@
 import { GoArrowUpRight } from "react-icons/go";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { zoomIn } from "./animations/motion";
+import {
+  zoomIn,
+  fadeInUp,
+  fadeInDown,
+  staggerChildren,
+  slideInFromRight,
+} from "./animations/motion";
 import { MdOutlineLocalShipping, MdOutlineMessage } from "react-icons/md";
 import { CiCreditCard1 } from "react-icons/ci";
 import { FaRepeat } from "react-icons/fa6";
@@ -41,8 +47,18 @@ export function Homepage() {
         </motion.div>
       </div>
 
-      <div className="grid grid-cols-2 gap-6 mt-14">
-        <div className="flex flex-col gap-4 items-center justify-start text-center h-full">
+      {/* Features grid with staggered fade-in-up */}
+      <motion.div
+        className="grid grid-cols-2 gap-6 mt-14"
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.2 }}
+        variants={staggerChildren}
+      >
+        <motion.div
+          className="flex flex-col gap-4 items-center justify-start text-center h-full"
+          variants={fadeInUp}
+        >
           <div className="w-[86px] h-[86px] rounded-full bg-gray-50 dark:bg-gray-800 flex items-center justify-center">
             <MdOutlineLocalShipping size={32} />
           </div>
@@ -54,8 +70,11 @@ export function Homepage() {
               For all orders over ₦200,000
             </p>
           </div>
-        </div>
-        <div className="flex flex-col gap-4 items-center justify-start text-center h-full">
+        </motion.div>
+        <motion.div
+          className="flex flex-col gap-4 items-center justify-start text-center h-full"
+          variants={fadeInUp}
+        >
           <div className="w-[86px] h-[86px] rounded-full bg-gray-50 dark:bg-gray-800 flex items-center justify-center">
             <CiCreditCard1 size={32} className="dark:text-white" />
           </div>
@@ -67,8 +86,11 @@ export function Homepage() {
               We ensure secure payment
             </p>
           </div>
-        </div>
-        <div className="flex flex-col gap-4 items-center justify-start text-center h-full">
+        </motion.div>
+        <motion.div
+          className="flex flex-col gap-4 items-center justify-start text-center h-full"
+          variants={fadeInUp}
+        >
           <div className="w-[86px] h-[86px] rounded-full bg-gray-50 dark:bg-gray-800 flex items-center justify-center">
             <FaRepeat size={32} />
           </div>
@@ -80,8 +102,11 @@ export function Homepage() {
               Returning money after 30 days
             </p>
           </div>
-        </div>
-        <div className="flex flex-col gap-4 items-center justify-start text-center h-full">
+        </motion.div>
+        <motion.div
+          className="flex flex-col gap-4 items-center justify-start text-center h-full"
+          variants={fadeInUp}
+        >
           <div className="w-[86px] h-[86px] rounded-full bg-gray-50 dark:bg-gray-800 flex items-center justify-center">
             <MdOutlineMessage size={32} className="dark:text-white" />
           </div>
@@ -93,11 +118,46 @@ export function Homepage() {
               Friendly customer support
             </p>
           </div>
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
 
-      <section>
-        <h2>New Arrivals</h2>
+      <section className="w-full space-y-6 mt-14">
+        <motion.h2
+          className="font-semibold text-[23px] text-gray-900 dark:text-white"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.3 }}
+          variants={fadeInDown}
+        >
+          New Arrivals
+        </motion.h2>
+        <motion.div
+          className="w-full bg-cover bg-no-repeat rounded-2xl h-[465px] flex flex-col items-center justify-center"
+          style={{ backgroundImage: "url('/images/banner.svg')" }}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.3 }}
+          variants={slideInFromRight}
+        >
+          <Image
+            src="/images/macbook.svg"
+            alt="Macbook Image"
+            height={100}
+            width={100}
+            className="w-full max-w-[294px] relative z-20 pt-5"
+          />
+          <div className="flex flex-col gap-[14px] relative z-10 -top-14 text-center">
+            <h3 className="font-bold text-[40px] text-white">MacBook</h3>
+            <p className="font-medium text-base text-gray-300">
+              Be Pro Anywhere
+            </p>
+            <div className="w-full max-w-[121px] mx-auto">
+              <button className="bg-button-primary rounded-md text-white flex items-center py-2 px-4 font-medium text-[12px]">
+                From $1,119 <GoArrowUpRight />
+              </button>
+            </div>
+          </div>
+        </motion.div>
       </section>
     </div>
   );
