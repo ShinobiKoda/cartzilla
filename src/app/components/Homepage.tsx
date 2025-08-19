@@ -3,6 +3,7 @@ import { GoArrowUpRight } from "react-icons/go";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import Link from "next/link";
+import { IoEllipsisVerticalOutline, IoCartOutline } from "react-icons/io5";
 import {
   zoomIn,
   fadeInUp,
@@ -23,6 +24,8 @@ const electronicItems = [
     price: 449.0,
     comments: 45,
     rating: 5,
+    discount: 21,
+    discount_price: 430,
     image: "/images/smartwatch.svg",
   },
   {
@@ -302,7 +305,7 @@ export function Homepage() {
       </section>
 
       <section className="w-full mt-14">
-        <div className="w-full flex items-center justify-between">
+        <div className="w-full flex items-center justify-between border-b pb-4 border-gray-200 dark:border-gray-700 mb-6">
           <h2 className="font-semibold text-[23px] text-gray-900 dark:text-white">
             Trending Products
           </h2>
@@ -319,6 +322,117 @@ export function Homepage() {
             <MdKeyboardArrowRight />
           </motion.button>
         </div>
+        <div className="grid grid-cols-2 w-full gap-6">
+          {electronicItems.map((item) => (
+            <div
+              key={item.id}
+              className="w-full max-w-[257px] px-2 flex flex-col gap-4"
+            >
+              <p className="w-full flex items-center">
+                {item.discount && (
+                  <span className="font-medium text-[12px] text-white px-3 py-2 bg-button-danger rounded-[4px]">
+                    -{item.discount}%
+                  </span>
+                )}
+                <span className="ml-auto flex h-8 w-8 rounded-md hover:bg-slate-700 cursor-pointer items-center justify-center border border-gray-200 dark:border-gray-700 dark:text-gray-200 text-gray-700">
+                  <IoEllipsisVerticalOutline />
+                </span>
+              </p>
+              <Image
+                src={item.image}
+                alt={item.name}
+                width={100}
+                height={100}
+                className="w-full"
+              />
+              <div className="flex flex-col gap-2">
+                <div className="flex items-center gap-2">
+                  <div className="flex items-center">
+                    {Array.from({ length: 5 }).map((_, i) =>
+                      i < item.rating ? (
+                        <FaStar key={i} size={16} className="text-yellow-400" />
+                      ) : (
+                        <FaRegStar
+                          key={i}
+                          size={16}
+                          className="text-gray-300 dark:text-gray-500"
+                        />
+                      )
+                    )}
+                  </div>
+                  <p className="text-gray-400 font-normal text-[12px] dark:text-gray-500">
+                    ({item.comments})
+                  </p>
+                </div>
+                <p className="truncate text-gray-900 font-medium text-base dark:text-white">
+                  {item.name}
+                </p>
+                <div className="w-full flex items-center justify-between">
+                  <p className="flex flex-col">
+                    <span className="text-gray-900 font-semibold text-xl dark:text-white">
+                      {" "}
+                      $
+                      {new Intl.NumberFormat("en-US", {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2,
+                      }).format(item.price)}
+                    </span>
+                    {item.discount_price && (
+                      <span className="font-normal text-base text-gray-400 line-through dark:text-gray-500">
+                        {" "}
+                        {new Intl.NumberFormat("en-US", {
+                          minimumFractionDigits: 2,
+                          maximumFractionDigits: 2,
+                        }).format(item.discount_price)}
+                      </span>
+                    )}
+                  </p>
+                  <div className="w-10 h-10 flex items-center justify-center bg-gray-100 dark:bg-gray-700 rounded-lg hover:opacity-80 cursor-pointer">
+                    <IoCartOutline
+                      className="text-gray-700 dark:text-gray-200"
+                      size={20}
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section className="mt-14">
+        <motion.div
+          initial="hidden"
+          animate="visible"
+          variants={zoomIn}
+          className="w-full bg-gradient-to-r from-gradient-start to-gradient-end dark:bg-gradient-to-r dark:from-dark-gradient-start dark:to-dark-gradient-end rounded-xl text-center"
+        >
+          <div className="flex flex-col pt-12">
+            <div className="text-gray-900 dark:text-gray-300 text-base font-normal flex items-center justify-center mb-7">
+              <h3 className="flex items-center font-semibold text-center gap-2">
+                <span className="text-[50px]">20</span>
+                <p className="flex flex-col items-start">
+                  <span className="text-3xl">%</span>
+                  <span className="text-xl">OFF</span>
+                </p>
+              </h3>
+            </div>
+            <p className="text-gray-900 dark:text-white font-bold text-[23px] mb-3">
+              SEASONAL WEEKLY <br />
+              SALE 2025
+            </p>
+            <p className="text-gray-800 font-normal text-base mb-7 dark:text-gray-100">
+              Use code <span className="font-semibold text-gray-800 bg-white px-2 rounded-2xl py-1">Sale 2025</span> to get the best offer
+            </p>
+          </div>
+          <Image
+            src="images/weekly-sale.svg"
+            alt="Headphone"
+            width={100}
+            height={100}
+            className="w-full max-w-[300px] mx-auto"
+          />
+        </motion.div>
       </section>
     </div>
   );

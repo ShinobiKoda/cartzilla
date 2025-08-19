@@ -15,6 +15,7 @@ module.exports = {
         'button-primary': 'rgb(var(--button) / <alpha-value>)',
         'dark-gradient-start': '#1B273A',
         'dark-gradient-end': '#1F2632',
+        'button-danger': '#F03D3D'
 
       }
     },
