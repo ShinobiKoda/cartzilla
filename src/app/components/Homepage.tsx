@@ -10,6 +10,9 @@ import {
   fadeInDown,
   staggerChildren,
   fadeIn,
+  rotateIn,
+  bounce,
+  scaleOnHover,
 } from "./animations/motion";
 import { MdOutlineLocalShipping, MdOutlineMessage } from "react-icons/md";
 import { CiCreditCard1 } from "react-icons/ci";
@@ -322,29 +325,44 @@ export function Homepage() {
             <MdKeyboardArrowRight />
           </motion.button>
         </div>
-        <div className="grid grid-cols-2 w-full gap-6">
+        <motion.div
+          className="grid grid-cols-2 w-full gap-6"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
+          variants={staggerChildren}
+        >
           {electronicItems.map((item) => (
-            <div
+            <motion.div
               key={item.id}
-              className="w-full max-w-[257px] px-2 flex flex-col gap-4"
+              className="w-full max-w-[257px] px-2 flex flex-col gap-4 will-change-transform"
+              variants={fadeInUp}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.99 }}
+              transition={{ type: "spring", stiffness: 300, damping: 22 }}
             >
-              <p className="w-full flex items-center">
+              <div className="w-full flex items-center">
                 {item.discount && (
                   <span className="font-medium text-[12px] text-white px-3 py-2 bg-button-danger rounded-[4px]">
                     -{item.discount}%
                   </span>
                 )}
-                <span className="ml-auto flex h-8 w-8 rounded-md hover:bg-slate-700 cursor-pointer items-center justify-center border border-gray-200 dark:border-gray-700 dark:text-gray-200 text-gray-700">
+                <motion.span
+                  className="ml-auto flex h-8 w-8 rounded-md hover:bg-slate-200 cursor-pointer items-center justify-center border border-gray-200 dark:border-gray-700 dark:text-gray-200 text-gray-700"
+                  whileTap={{ scale: 0.9 }}
+                >
                   <IoEllipsisVerticalOutline />
-                </span>
-              </p>
-              <Image
-                src={item.image}
-                alt={item.name}
-                width={100}
-                height={100}
-                className="w-full"
-              />
+                </motion.span>
+              </div>
+              <motion.div variants={fadeIn}>
+                <Image
+                  src={item.image}
+                  alt={item.name}
+                  width={100}
+                  height={100}
+                  className="w-full"
+                />
+              </motion.div>
               <div className="flex flex-col gap-2">
                 <div className="flex items-center gap-2">
                   <div className="flex items-center">
@@ -370,7 +388,6 @@ export function Homepage() {
                 <div className="w-full flex items-center justify-between">
                   <p className="flex flex-col">
                     <span className="text-gray-900 font-semibold text-xl dark:text-white">
-                      {" "}
                       $
                       {new Intl.NumberFormat("en-US", {
                         minimumFractionDigits: 2,
@@ -379,7 +396,6 @@ export function Homepage() {
                     </span>
                     {item.discount_price && (
                       <span className="font-normal text-base text-gray-400 line-through dark:text-gray-500">
-                        {" "}
                         {new Intl.NumberFormat("en-US", {
                           minimumFractionDigits: 2,
                           maximumFractionDigits: 2,
@@ -387,51 +403,92 @@ export function Homepage() {
                       </span>
                     )}
                   </p>
-                  <div className="w-10 h-10 flex items-center justify-center bg-gray-100 dark:bg-gray-700 rounded-lg hover:opacity-80 cursor-pointer">
+                  <motion.div
+                    className="w-10 h-10 flex items-center justify-center bg-gray-100 dark:bg-gray-700 rounded-lg hover:opacity-80 cursor-pointer"
+                    whileTap={{ scale: 0.9 }}
+                  >
                     <IoCartOutline
                       className="text-gray-700 dark:text-gray-200"
                       size={20}
                     />
-                  </div>
+                  </motion.div>
                 </div>
               </div>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </section>
 
       <section className="mt-14">
         <motion.div
           initial="hidden"
-          animate="visible"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.3 }}
           variants={zoomIn}
           className="w-full bg-gradient-to-r from-gradient-start to-gradient-end dark:bg-gradient-to-r dark:from-dark-gradient-start dark:to-dark-gradient-end rounded-xl text-center"
         >
-          <div className="flex flex-col pt-12">
-            <div className="text-gray-900 dark:text-gray-300 text-base font-normal flex items-center justify-center mb-7">
+          <motion.div
+            variants={staggerChildren}
+            className="flex flex-col pt-12"
+          >
+            <motion.div
+              className="text-gray-900 dark:text-gray-300 text-base font-normal flex items-center justify-center mb-7"
+              variants={fadeInDown}
+            >
               <h3 className="flex items-center font-semibold text-center gap-2">
-                <span className="text-[50px]">20</span>
-                <p className="flex flex-col items-start">
-                  <span className="text-3xl">%</span>
-                  <span className="text-xl">OFF</span>
+                <motion.span
+                  className="text-[50px] leading-none"
+                  variants={rotateIn}
+                >
+                  20
+                </motion.span>
+                <p className="flex flex-col items-start leading-none">
+                  <motion.span className="text-3xl" variants={bounce}>
+                    %
+                  </motion.span>
+                  <motion.span className="text-xl" variants={fadeInUp}>
+                    OFF
+                  </motion.span>
                 </p>
               </h3>
-            </div>
-            <p className="text-gray-900 dark:text-white font-bold text-[23px] mb-3">
+            </motion.div>
+            <motion.p
+              className="text-gray-900 dark:text-white font-bold text-[23px] mb-3"
+              variants={fadeInUp}
+              transition={{ delay: 0.08 }}
+            >
               SEASONAL WEEKLY <br />
               SALE 2025
-            </p>
-            <p className="text-gray-800 font-normal text-base mb-7 dark:text-gray-100">
-              Use code <span className="font-semibold text-gray-800 bg-white px-2 rounded-2xl py-1">Sale 2025</span> to get the best offer
-            </p>
-          </div>
-          <Image
-            src="images/weekly-sale.svg"
-            alt="Headphone"
-            width={100}
-            height={100}
-            className="w-full max-w-[300px] mx-auto"
-          />
+            </motion.p>
+            <motion.p
+              className="text-gray-800 font-normal text-base mb-7 dark:text-gray-100"
+              variants={fadeIn}
+              transition={{ delay: 0.15 }}
+            >
+              Use code{" "}
+              <motion.span
+                className="font-semibold text-gray-800 bg-white px-2 rounded-2xl py-1"
+                variants={scaleOnHover}
+                whileHover="hover"
+              >
+                Sale 2025
+              </motion.span>{" "}
+              to get the best offer
+            </motion.p>
+          </motion.div>
+          <motion.div
+            variants={zoomIn}
+            transition={{ delay: 0.05 }}
+            whileHover={{ scale: 1.02 }}
+          >
+            <Image
+              src="images/weekly-sale.svg"
+              alt="Headphone"
+              width={100}
+              height={100}
+              className="w-full max-w-[300px] mx-auto"
+            />
+          </motion.div>
         </motion.div>
       </section>
     </div>
