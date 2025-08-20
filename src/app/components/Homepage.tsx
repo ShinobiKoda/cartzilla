@@ -1,5 +1,6 @@
 "use client";
 import { GoArrowUpRight } from "react-icons/go";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import Link from "next/link";
@@ -19,8 +20,9 @@ import { CiCreditCard1 } from "react-icons/ci";
 import { FaRepeat } from "react-icons/fa6";
 import { FaStar, FaRegStar } from "react-icons/fa";
 import { MdKeyboardArrowRight } from "react-icons/md";
+import SpecialOffersCarousel, { ElectronicItem } from "./SpecialOffersCarousel";
 
-const electronicItems = [
+const electronicItems: ElectronicItem[] = [
   {
     id: 1,
     name: "Smart Watch Series 7, White",
@@ -90,6 +92,24 @@ const electronicItems = [
 ];
 
 export function Homepage() {
+  const initialTime = 12 * 60 * 60 + 10 * 60 + 12;
+  const [timeLeft, setTimeLeft] = useState(initialTime);
+
+  useEffect(() => {
+    if (timeLeft <= 0) return;
+
+    const interval = setInterval(() => {
+      setTimeLeft((prev) => prev - 1);
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [timeLeft]);
+
+  // Format Time
+  const hours = Math.floor(timeLeft / 3600);
+  const minutes = Math.floor((timeLeft % 3600) / 60);
+  const seconds = timeLeft % 60;
+
   return (
     <div className="min-h-screen w-full bg-white dark:bg-[#181d25] px-4">
       <div className="w-full pt-6">
@@ -109,6 +129,10 @@ export function Homepage() {
             </p>
             <div className="w-full max-w-[150px] mx-auto">
               <motion.button
+                variants={scaleOnHover}
+                initial="hidden"
+                animate="visible"
+                whileHover="hover"
                 whileTap={{ scale: 0.9 }}
                 className="bg-button-primary text-white font-medium text-base rounded-lg flex items-center text-center py-4 w-full justify-center cursor-pointer"
               >
@@ -116,13 +140,15 @@ export function Homepage() {
               </motion.button>
             </div>
           </div>
-          <Image
-            src="images/headphone.svg"
-            alt="Headphone"
-            width={100}
-            height={100}
-            className="w-full max-w-[300px] mx-auto"
-          />
+          <motion.div variants={fadeIn} transition={{ delay: 0.08 }}>
+            <Image
+              src="images/headphone.svg"
+              alt="Headphone"
+              width={100}
+              height={100}
+              className="w-full max-w-[300px] mx-auto"
+            />
+          </motion.div>
         </motion.div>
       </div>
 
@@ -266,12 +292,14 @@ export function Homepage() {
               whileTap={{ scale: 0.99 }}
               transition={{ type: "spring", stiffness: 300, damping: 20 }}
             >
-              <Image
-                src={item.image}
-                alt={item.name}
-                height={100}
-                width={100}
-              />
+              <motion.div variants={fadeIn}>
+                <Image
+                  src={item.image}
+                  alt={item.name}
+                  height={100}
+                  width={100}
+                />
+              </motion.div>
               <div className="space-y-4">
                 <div className="flex items-center gap-2">
                   <div className="flex items-center">
@@ -405,6 +433,10 @@ export function Homepage() {
                   </p>
                   <motion.div
                     className="w-10 h-10 flex items-center justify-center bg-gray-100 dark:bg-gray-700 rounded-lg hover:opacity-80 cursor-pointer"
+                    variants={scaleOnHover}
+                    initial="hidden"
+                    animate="visible"
+                    whileHover="hover"
                     whileTap={{ scale: 0.9 }}
                   >
                     <IoCartOutline
@@ -490,6 +522,42 @@ export function Homepage() {
             />
           </motion.div>
         </motion.div>
+      </section>
+
+      <section className="mt-14 w-full">
+        <div className="space-y-2 mb-6 border-b border-gray-200 dark:border-gray-700 pb-4">
+          <div className="w-full flex items-center justify-between">
+            <h2 className="font-semibold text-[23px] text-gray-900 dark:text-white">
+              Special Offers for you
+            </h2>
+            <motion.button
+              whileTap={{ scale: 0.9 }}
+              className="flex items-center gap-2 hover:opacity-90 cursor-pointer"
+            >
+              <Link
+                href="#"
+                className="text-gray-700 text-base font-medium dark:text-gray-200"
+              >
+                View All
+              </Link>
+              <MdKeyboardArrowRight />
+            </motion.button>
+          </div>
+          <div className="flex items-center gap-4">
+            <div className="rounded-md bg-button-danger text-white font-medium text-base flex items-center justify-center p-2">
+              {String(hours).padStart(2, "0")}hrs
+            </div>
+            <span className="text-gray-400 dark:text-gray-500">:</span>
+            <div className="rounded-md bg-button-danger text-white font-medium text-base flex items-center justify-center p-2">
+              {String(minutes).padStart(2, "0")}m
+            </div>
+            <span className="text-gray-400 dark:text-gray-500">:</span>
+            <div className="rounded-md bg-button-danger text-white font-medium text-base flex items-center justify-center p-2">
+              {String(seconds).padStart(2, "0")}s
+            </div>
+          </div>
+        </div>
+        <SpecialOffersCarousel items={electronicItems} />
       </section>
     </div>
   );
