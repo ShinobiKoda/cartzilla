@@ -21,6 +21,7 @@ import { FaRepeat } from "react-icons/fa6";
 import { FaStar, FaRegStar } from "react-icons/fa";
 import { MdKeyboardArrowRight } from "react-icons/md";
 import SpecialOffersCarousel, { ElectronicItem } from "./SpecialOffersCarousel";
+import { useTheme } from "next-themes";
 
 const electronicItems: ElectronicItem[] = [
   {
@@ -91,6 +92,22 @@ const electronicItems: ElectronicItem[] = [
   },
 ];
 
+const logoImages = [
+  "/images/apple-logo-light.svg",
+  "/images/motorola-logo-light.svg",
+  "/images/samsung-logo-light.svg",
+  "/images/sony-logo-light.svg",
+  "/images/canon-logo-light.svg",
+];
+
+const logoImagesDark = [
+  "/images/apple-logo-dark.svg",
+  "/images/motorola-logo-dark.svg",
+  "/images/samsung-logo-dark.svg",
+  "/images/sony-logo-dark.svg",
+  "/images/canon-logo-dark.svg",
+];
+
 export function Homepage() {
   const initialTime = 12 * 60 * 60 + 10 * 60 + 12;
   const [timeLeft, setTimeLeft] = useState(initialTime);
@@ -109,6 +126,9 @@ export function Homepage() {
   const hours = Math.floor(timeLeft / 3600);
   const minutes = Math.floor((timeLeft % 3600) / 60);
   const seconds = timeLeft % 60;
+
+  const { resolvedTheme } = useTheme();
+  const brandLogos = resolvedTheme === "dark" ? logoImagesDark : logoImages;
 
   return (
     <div className="min-h-screen w-full bg-white dark:bg-[#181d25] px-4">
@@ -558,6 +578,23 @@ export function Homepage() {
           </div>
         </div>
         <SpecialOffersCarousel items={electronicItems} />
+      </section>
+
+      <section className="mt-14 grid grid-cols-2 gap-4">
+        {brandLogos.map((img, index) => (
+          <div
+            key={index}
+            className="w-full border border-gray-200 dark:border-gray-700 rounded-xl p-4 min-h-[96px] flex items-center justify-center"
+          >
+            <Image
+              src={img}
+              alt="Brand Logo"
+              height={100}
+              width={100}
+              className="w-full max-w-[150px]"
+            />
+          </div>
+        ))}
       </section>
     </div>
   );

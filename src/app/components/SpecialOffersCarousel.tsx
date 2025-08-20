@@ -40,14 +40,15 @@ export default function SpecialOffersCarousel({
   const viewportRef = useRef<HTMLDivElement | null>(null);
   const [containerWidth, setContainerWidth] = useState(0);
   useEffect(() => {
-    const update = () =>
-      setContainerWidth(viewportRef.current?.clientWidth ?? 0);
+    const el = viewportRef.current;
+    if (!el) return;
+    const update = () => setContainerWidth(el.clientWidth);
     update();
-    window.addEventListener("resize", update);
-    return () => window.removeEventListener("resize", update);
+    const ro = new ResizeObserver(() => update());
+    ro.observe(el);
+    return () => ro.disconnect();
   }, []);
 
-  // Animation controls for snapping
   const controls = useAnimation();
   useEffect(() => {
     controls.start({
@@ -56,7 +57,6 @@ export default function SpecialOffersCarousel({
     });
   }, [carouselIndex, containerWidth, controls]);
 
-  // Autoplay with reset on user navigation
   const autoplayDelay = 4000;
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const resetAutoplay = useCallback(() => {
@@ -114,7 +114,11 @@ export default function SpecialOffersCarousel({
           }}
         >
           {pages.map((page, pi) => (
-            <div key={pi} className="min-w-full px-1">
+            <div
+              key={pi}
+              className="flex-none"
+              style={{ width: containerWidth || "100%" }}
+            >
               <motion.div
                 className="grid grid-cols-2 gap-4"
                 initial="hidden"
@@ -126,7 +130,6 @@ export default function SpecialOffersCarousel({
                   <motion.div
                     key={item.id}
                     variants={fadeInUp}
-                    whileHover={{ scale: 1.02 }}
                     transition={{ type: "spring", stiffness: 300, damping: 22 }}
                   >
                     <motion.span
